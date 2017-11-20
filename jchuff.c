@@ -383,6 +383,10 @@ dump_buffer (working_state *state)
   } \
 }
 
+#if defined(__aarch64__)
+	#define SIZEOF_SIZE_T 8
+#endif
+
 #if !defined(_WIN32) && !defined(SIZEOF_SIZE_T)
 #error Cannot determine word size
 #endif

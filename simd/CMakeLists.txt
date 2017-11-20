@@ -1,3 +1,7 @@
+if(ANDROID)
+	set(SIMD_OBJS ${CMAKE_CURRENT_LIST_DIR}/jsimd_arm64_neon.S PARENT_SCOPE)
+	add_custom_target(simd DEPENDS ${SIMD_OBJS})
+else(ANDROID)
 if(NOT DEFINED NASM)
   find_program(NASM NAMES nasm yasm DOC "Path to NASM/YASM executable")
 endif()
@@ -12,7 +16,7 @@ else()
     set(NAFLAGS -fwin32 -DWIN32)
   endif()
 endif()
-set(NAFLAGS ${NAFLAGS} -I${CMAKE_SOURCE_DIR}/win/ -I${CMAKE_CURRENT_SOURCE_DIR}/)
+set(NAFLAGS ${NAFLAGS} -I${CMAKE_CURRENT_LIST_DIR}/../win/ -I${CMAKE_CURRENT_SOURCE_DIR}/)
 
 # This only works if building from the command line.  There is currently no way
 # to set a variable's value based on the build type when using the MSVC IDE.
@@ -79,3 +83,5 @@ endforeach()
 
 set(SIMD_OBJS ${SIMD_OBJS} PARENT_SCOPE)
 add_custom_target(simd DEPENDS ${SIMD_OBJS})
+
+endif()

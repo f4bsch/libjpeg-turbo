@@ -70,6 +70,10 @@ EXTERN(void) jpeg_make_d_derived_tbl
  * necessary.
  */
 
+#if defined(__aarch64__)
+#define SIZEOF_SIZE_T 8
+#endif
+
 #if !defined(_WIN32) && !defined(SIZEOF_SIZE_T)
 #error Cannot determine word size
 #endif
