@@ -36,6 +36,7 @@
 #include <stdint.h>
 #endif
 #include <limits.h>
+#include <stdint.h>
 
 #ifndef NO_GETENV
 #ifndef HAVE_STDLIB_H           /* <stdlib.h> should declare getenv() */
