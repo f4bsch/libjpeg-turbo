@@ -70,7 +70,7 @@ EXTERN(void) jpeg_make_d_derived_tbl
  * necessary.
  */
 
-#if defined(__aarch64__)
+#if __aarch64__ || __x86_64__ || __ppc64__
 #define SIZEOF_SIZE_T 8
 #endif
 

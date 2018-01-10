@@ -383,7 +383,7 @@ dump_buffer (working_state *state)
   } \
 }
 
-#if defined(__aarch64__)
+#if __aarch64__ || __x86_64__ || __ppc64__
 	#define SIZEOF_SIZE_T 8
 #endif
 

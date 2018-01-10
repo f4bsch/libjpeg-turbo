@@ -232,9 +232,20 @@ endif()
 if(WITH_SIMD)
   add_definitions(-DWITH_SIMD)
   add_subdirectory(simd)
+  #message(FATAL_ERROR "b ${SIMD_X86_64}")
   if(ANDROID)
-	set(JPEG_SOURCES ${JPEG_SOURCES} simd/jsimd_arm64.c simd/jsimd_arm64_neon.S)
-	set_property(SOURCE simd/jsimd_arm64_neon.S PROPERTY LANGUAGE C)
+    if (${CMAKE_SYSTEM_PROCESSOR} STREQUAL "aarch64")
+	    set(JPEG_SOURCES ${JPEG_SOURCES} simd/jsimd_arm64.c simd/jsimd_arm64_neon.S)
+	    set_property(SOURCE simd/jsimd_arm64_neon.S PROPERTY LANGUAGE C)
+	else() # assume x86_64
+      message(STATUS "Building x86_64 SIMD extensions")
+
+	    set(JPEG_SOURCES ${JPEG_SOURCES} simd/jsimd_x86_64.c simd/jfdctflt-sse-64.asm simd/jccolor-sse2-64.asm simd/jcgray-sse2-64.asm
+                                                                     simd/jchuff-sse2-64.asm simd/jcsample-sse2-64.asm simd/jdcolor-sse2-64.asm simd/jdmerge-sse2-64.asm
+                                                                     simd/jdsample-sse2-64.asm simd/jfdctfst-sse2-64.asm simd/jfdctint-sse2-64.asm simd/jidctflt-sse2-64.asm
+                                                                     simd/jidctfst-sse2-64.asm simd/jidctint-sse2-64.asm simd/jidctred-sse2-64.asm simd/jquantf-sse2-64.asm
+                                                                     simd/jquanti-sse2-64.asm)
+	endif()
   elseif(SIMD_X86_64)
     set(JPEG_SOURCES ${JPEG_SOURCES} simd/jsimd_x86_64.c)
   else()
